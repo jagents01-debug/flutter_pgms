@@ -1,0 +1,83 @@
+void main() {
+print("Enter the total bill amount: ");
+double totalBill = double.parse(stdin.readLineSync()!);
+print("Enter the number of people: ");
+int numberOfPeople = int.parse(stdin.readLineSync()!);
+if (numberOfPeople <= 0) {
+print("Number of people must be greater than 0.");
+return;
+}
+double splitAmount = totalBill / numberOfPeople;
+print("\nTotal Bill: ${totalBill.toStringAsFixed(2)}");
+print("Number of People: $numberOfPeople");
+print("Each person should pay: ${splitAmount.toStringAsFixed(2)}");
+}
+
+
+
+import 'dart:math';
+import 'dart:io';
+void main() {
+const String lowercase = "abcdefghijklmnopqrstuvwxyz";
+const String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const String numbers = "0123456789";
+const String symbols = "!@#\$%^&*()-_=+[]{}<>?/";
+const String allCharacters =
+lowercase + uppercase + numbers + symbols;
+stdout.write("Enter the desired password length (minimum 8): ");
+int length = int.parse(stdin.readLineSync()!);
+if (length < 8) {
+print("Password length should be at least 8 characters.");
+return;
+}
+Random random = Random();
+List<String> password = [];
+password.add(lowercase[random.nextInt(lowercase.length)]);
+password.add(uppercase[random.nextInt(uppercase.length)]);
+password.add(numbers[random.nextInt(numbers.length)]);
+password.add(symbols[random.nextInt(symbols.length)]);
+for (int i = 4; i < length; i++) {
+password.add(allCharacters[random.nextInt(allCharacters.length)]);
+}
+password.shuffle(random);
+print("\nGenerated Password: ${password.join()}");
+}
+
+
+
+import 'dart:io';
+import 'dart:math';
+void main() {
+Random random = Random();
+String secretNumber = (1000 + random.nextInt(9000)).toString();
+int guesses = 0;
+print("COWS AND BULLS GAME ");
+print("I have generated a 4-digit number.");
+print("Try to guess it!");
+while (true) {
+stdout.write("\nEnter your 4-digit guess: ");
+String? guess = stdin.readLineSync();
+if (guess == null || guess.length != 4 || int.tryParse(guess) == null) {
+print("Please enter a valid 4-digit number.");
+continue;
+}
+guesses++;
+int cows = 0;
+int bulls = 0;
+for (int i = 0; i < 4; i++) {
+if (guess[i] == secretNumber[i]) {
+cows++;
+} else if (secretNumber.contains(guess[i])) {
+bulls++;
+}
+}
+print("Cows: $cows");
+print("Bulls: $bulls");
+if (cows == 4) {
+print("\nYou have won the game!!!");
+print("You guessed the correct number: $secretNumber");
+print("It only took $guesses guesses");
+break;
+}
+}
+}
